@@ -2,9 +2,9 @@
   "name": "luminance-api",
   "version": "1.0.0",
   "description": "API for Luminance",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "npx tsx server.ts",
+    "start": "npx tsx src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Annabelle Strong",
@@ -19,10 +19,12 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "aws-sdk": "^2.1679.0",
     "axios": "^1.7.4",
     "env-var": "^7.5.0",
     "express": "^4.19.2",
     "helmet": "^7.1.0",
-    "mongodb": "^6.8.0"
+    "mongodb": "^6.8.0",
+    "uuid": "^10.0.0"
   }
 }

@@ -1,6 +1,6 @@
 //import { closeConnection } from './database/client';
 import { RequestHandler, ErrorHandler, ResponseHandler } from './middleware';
-import { VocabHandler } from './handlers';
+import { UserHandler, VocabHandler } from './handlers';
 const express = require("express")
 const helmet = require("helmet")
 
@@ -14,6 +14,8 @@ app.use(express.json())
 app.use(RequestHandler)
 
 app.get("/vocabulary", VocabHandler.getVocabulary)
+app.get("/users/get", UserHandler.getUser)
+app.get("/users/add", UserHandler.addUser)
 
 app.use(ErrorHandler)
 app.use(ResponseHandler)
