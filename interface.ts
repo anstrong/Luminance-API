@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb"
 
 interface MongoDocument {
-    _id: ObjectId
+    _id: string//ObjectId
 }
 
 export type OIDString<T extends MongoDocument> = string;

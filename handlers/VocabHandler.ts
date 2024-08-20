@@ -1,15 +1,16 @@
 import { VocabularyService } from '../database';
 
 export const getVocabulary = async (req, res, next) => {
-    const {
-        params: { uid }
-    } = req
-
     try {
+        const {
+            headers: { uid }
+        } = req
+
         const words = await VocabularyService.getUserVocabulary(uid);
 
         res.status(200).json({ words });
+        next();
     } catch (error) {
-        next(error, req);
+        next(error, res, next);
     }
 }

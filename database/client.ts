@@ -1,3 +1,4 @@
+/*
 const MongoClient = require('mongodb').MongoClient;
 
 const MONGO_CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING;
@@ -13,7 +14,8 @@ const getCollection = async (collName: string) => {
     return await connection.db(MONGO_DATABASE).collection(collName);
 }
 
-const closeConnection = async () => await connection.close();
+export const closeConnection = async () => await connection.close();
 
 export const VocabCollection = await getCollection(VOCAB_COLLECTION);
 export const UserCollection = await getCollection(USER_COLLECTION);
+*/
