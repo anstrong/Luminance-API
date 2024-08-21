@@ -1,4 +1,3 @@
-import * as UserService from './UserService';
-import * as VocabularyService from './VocabularyService';
+import * as DB from './connector'
 
-export { UserService, VocabularyService };
+export { DB }

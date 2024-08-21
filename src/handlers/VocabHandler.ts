@@ -1,4 +1,4 @@
-import { VocabularyService } from '../database';
+import { VocabularyService } from '../services';
 
 export const getVocabulary = async (req, res, next) => {
     try {

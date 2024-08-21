@@ -1,4 +1,4 @@
-import { UserService } from '../database';
+import { UserService } from '../services';
 
 export const getUser = async (req, res, next) => {
     try {
