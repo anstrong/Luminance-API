@@ -1,4 +1,6 @@
 import { UserService } from '../services';
+import { STATUS_CODES } from '../constants';
+const { SUCCESS, BAD_REQUEST } = STATUS_CODES;
 
 export const getUser = async (req, res, next) => {
     try {
@@ -8,27 +10,28 @@ export const getUser = async (req, res, next) => {
 
         const user = await UserService.getUser(uid);
 
-        res.status(200).json(user);
+        res.status(SUCCESS).json(user);
         next();
     } catch (error) {
         next(error, res, next);
     }
 }
 
-export const addUser = async(req, res, next) => {
+export const addUser = async (req, res, next) => {
     try {
         const {
             body: { name }
         } = req
 
         if (!name) {
-            throw new Error('Missing data: name')
+            res.statusCode = BAD_REQUEST;
+            throw new Error('Missing data: name');
         }
 
-        const uid = await  UserService.addUser(name);
+        const uid = await UserService.addUser(name);
         const user = await UserService.getUser(uid);
 
-        res.status(200).json(user);
+        res.status(SUCCESS).json(user);
         next();
     } catch (error) {
         next(error, res, next);
