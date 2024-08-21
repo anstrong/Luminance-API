@@ -1,5 +1,3 @@
-
-
 export type UUID<T> = string;
 export type DocumentIds<T> = UUID<T>[];
 

@@ -21,7 +21,7 @@
   "dependencies": {
     "aws-sdk": "^2.1679.0",
     "axios": "^1.7.4",
-    "env-var": "^7.5.0",
+    "ckey": "^1.0.3",
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "mongodb": "^6.8.0",

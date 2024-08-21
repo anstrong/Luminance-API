@@ -1,5 +1,4 @@
-const DYNAMO_DB_URL = "http://localhost:8000"// process.env.DYNAMO_DB_URL;
-const AWS_REGION = "fakeRegion"// process.env.AWS_REGION;
+import { DYNAMO_DB_URL, AWS_REGION } from '../env'
 
 const AWS = require("aws-sdk");
 AWS.config.update({ region: AWS_REGION });
@@ -7,24 +6,23 @@ AWS.config.update({ region: AWS_REGION });
 const ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10", endpoint: DYNAMO_DB_URL });
 
 export const queryTable = async (tableName, params) => {
-    return await ddb.query({ TableName: tableName, ...params }, function (err, data) {
+    const data = await ddb.query({ TableName: tableName, ...params }, function (err, data) {
         if (err) {
             throw err;
         }
-        console.info("client: ",data)
     }).promise();
+    console.info(`QUERY: ${JSON.stringify(data)}`)
+    return data
 }
 
 export const addToTable = async (tableName, item) => {
-    console.info({ TableName: tableName, Item: item })
-    return await ddb.putItem({ TableName: tableName, Item: item }, function (err, data) {
+    const params = { TableName: tableName, Item: item };
+    console.info(`POST: ${JSON.stringify(params)}`)
+    return await ddb.putItem(params, function (err, data) {
         if (err) {
             throw err;
         } return data;
     }).promise();
 }
 
-export const parseResult = (item) => {
-    return Object.fromEntries(Object.entries(item).map(([attr, val], i) => [attr, Object.values(val)[0]]))
-}
 

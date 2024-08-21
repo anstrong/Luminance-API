@@ -1,10 +1,8 @@
-//import { closeConnection } from './database/client';
 import { RequestHandler, ErrorHandler, ResponseHandler } from './middleware';
 import { UserHandler, VocabHandler } from './handlers';
+
 const express = require("express")
 const helmet = require("helmet")
-
-const PORT = process.env.PORT || 3000
 
 const app = express()
 
@@ -20,12 +18,13 @@ app.get("/users/add", UserHandler.addUser)
 app.use(ErrorHandler)
 app.use(ResponseHandler)
 
+const PORT = process.env.PORT || 3000
+
 app.listen(PORT, () => {
     console.log(`Starting Express server on http://localhost:${PORT}`)
 })
 
 process.on("SIGINT", async () => {
-    //await closeConnection().then(() => console.log("Connection closed"))
-    console.log('Connection closed');
+    console.log('API stopped');
     process.exit();
 })

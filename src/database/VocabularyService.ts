@@ -1,5 +1,6 @@
 import { UserService } from '.';
 import { Word } from '../interface';
+import { VOCAB_TABLE_NAME } from '../env';
 
 export const getUserVocabulary = async (uid: string) => {
     const user = await UserService.getUser(uid);
