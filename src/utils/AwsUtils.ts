@@ -1,15 +1,5 @@
+import { AWSTypeMap } from "../constants";
 import { objectMap } from ".";
-
-const AWSTypeMap = {
-    'string': 'S',
-    'number': 'N',
-    'binary': 'B',
-    'boolean': 'BOOL',
-    'null': 'NULL',
-    'undefined': 'NULL',
-    'object': 'M',
-    'array': 'L',
-}
 
 export const parseResult = (item) => {
     return objectMap(item, (attr, val, i) => [attr, Object.values(val)[0]]);

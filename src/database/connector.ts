@@ -12,14 +12,12 @@ export const queryByID = async (tableName, id: string) => {
         })
         results = data.Items;
     } catch (error) {
-        console.error(error);
         throw new Error(`Unable to retrieve record ${id} from ${tableName}`);
-    } finally {
-        if (!results) {
-            throw new Error(`${id} not found in ${tableName}`);
-        }
-        return parseResult(results[0]);
     }
+    if (!results) {
+        throw new Error(`${id} not found in ${tableName}`);
+    }
+    return parseResult(results[0]);
 }
 
 export const createEntry = async (tableName, item) => {
@@ -29,7 +27,6 @@ export const createEntry = async (tableName, item) => {
         await addToTable(tableName, params)
         return uid;
     } catch (error) {
-        console.debug(error);
-        throw new Error(`Error adding to ${JSON.stringify(item)} ${tableName}`);
+        throw new Error(`Error adding ${JSON.stringify(item)} to ${tableName}`);
     }
 }

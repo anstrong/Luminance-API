@@ -48,3 +48,6 @@ export interface Book {
     author: string
 }
 
+export interface StringObject<T = any> {
+    [key: string]: T
+}

@@ -6,3 +6,7 @@ import { DB } from '../database';
 export const getWord = async (id: string) => {
     return await DB.queryByID(VOCAB_TABLE_NAME, id) as Word;
 }
+
+export const addWord = async (word: string, userId: string) => {
+    const wordEntry = await DB.createEntry(VOCAB_TABLE_NAME, { Word: word });
+}
