@@ -25,13 +25,12 @@ export const addUser = async (req, res, next) => {
 
         if (!name) {
             res.statusCode = BAD_REQUEST;
-            throw new Error('Missing data: name');
+            throw new Error('Missing body: name');
         }
 
         const uid = await UserService.addUser(name);
-        const user = await UserService.getUser(uid);
 
-        res.status(SUCCESS).json(user);
+        res.status(SUCCESS).json(uid);
         next();
     } catch (error) {
         next(error, res, next);

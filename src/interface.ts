@@ -3,7 +3,7 @@ export type DocumentIds<T> = UUID<T>[];
 
 export interface User {
     Id: string
-    Name: string
+    FullName: string
     Words: DocumentIds<Word>
     Associations: Associations
 }

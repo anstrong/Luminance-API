@@ -11,7 +11,9 @@ app.use(express.json())
 
 app.use(RequestHandler)
 
-app.get("/vocabulary", VocabHandler.getVocabulary)
+app.get("/vocabulary/add", VocabHandler.addToVocabulary)
+app.get("/users/vocabulary/get", VocabHandler.getUserVocabulary)
+app.get("/users/vocabulary/add", VocabHandler.addWordToUser)
 app.get("/users/get", UserHandler.getUser)
 app.get("/users/add", UserHandler.addUser)
 

@@ -1,8 +1,24 @@
 import { UserService, VocabularyService } from '../services';
 import { STATUS_CODES } from '../constants';
-const { SUCCESS } = STATUS_CODES;
+const { SUCCESS, BAD_REQUEST } = STATUS_CODES;
 
-export const getVocabulary = async (req, res, next) => {
+/*
+export const getWords = async (req, res, next) => {
+    try {
+        const {
+            body: { word }
+        } = req
+
+        const wordId = await VocabularyService.addWord(word);
+
+        res.status(SUCCESS).send(`${word} successfully added.`);
+        next();
+    } catch (error) {
+        next(error, res, next);
+    }
+}*/
+
+export const getUserVocabulary = async (req, res, next) => {
     try {
         const {
             headers: { uid }
@@ -19,10 +35,46 @@ export const getVocabulary = async (req, res, next) => {
         next(error, res, next);
     }
 }
+export const addToVocabulary = async (req, res, next) => {
+    try {
+        const {
+            body: { word }
+        } = req
+
+        const wordId = await VocabularyService.addWord(word);
+
+        res.status(SUCCESS).json(`${word} successfully added.`);
+        next();
+    } catch (error) {
+        next(error, res, next);
+    }
+}
 
 export const getUserWordAssociations = async (uid: string, word: string) => {
     const user = await UserService.getUser(uid);
     const { Associations } = user || {};
 
     return Associations[word] ?? [];
+}
+
+export const addWordToUser = async (req, res, next) => {
+    try {
+        const {
+            headers: { uid },
+            body: { word }
+        } = req
+
+        if (!word) {
+            res.statusCode = BAD_REQUEST;
+            throw new Error('Missing body: word');
+        }
+
+        const wordId = await VocabularyService.addWord(word);
+        const userFullName = await UserService.addToUserSet(uid, 'Words', wordId);
+
+        res.status(SUCCESS).json(`${word} successfully added to ${userFullName}.`);
+        next();
+    } catch (error) {
+        next(error, res, next);
+    }
 }

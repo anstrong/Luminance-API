@@ -6,7 +6,8 @@ export const requestHandler = (req, res, next) => {
         const {
             headers
         } = req
-        console.info(`\nREQUEST: ${JSON.stringify(headers)}`)
+        console.info(`\nREQUEST: ${JSON.stringify({ ...headers, endpoint: req.originalUrl })}`)
+
 
         if (!headers.uid) {
             res.statusCode = BAD_REQUEST;

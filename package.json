@@ -4,7 +4,7 @@
   "description": "API for Luminance",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npx tsx src/server.ts",
+    "start": "clear && npx tsx src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Annabelle Strong",

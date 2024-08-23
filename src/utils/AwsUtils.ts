@@ -1,18 +1,31 @@
 import { AWSTypeMap } from "../constants";
 import { objectMap } from ".";
+import { StringObject } from "../interface";
 
-export const parseResult = (item) => {
+export const parseResult = (item: StringObject<StringObject>) => {
     return objectMap(item, (attr, val, i) => [attr, Object.values(val)[0]]);
 }
 
-export const generateTypedParams = (data, primitivesOnly = true) => {
-    return objectMap(data, (attr, val, i) => {
-        const datatype = typeof val
-        try {
-            const typecode = AWSTypeMap[datatype]
-            return [attr, { [typecode]: val }];
-        } catch (error) {
-            throw new Error('ERROR: invalid AWS parameter type')
-        }
-    })
+export const getAWSType = val => {
+    const datatype = Array.isArray(val) ? "array" : typeof val
+    return AWSTypeMap[datatype]
 }
+
+export const generateTypedParam = (val) => {
+    try {
+        const typecode = getAWSType(val)
+        return { [typecode]: val };
+    } catch (error) {
+        throw new Error('ERROR: invalid AWS parameter type')
+    }
+}
+
+export const generateTypedParams = (data: StringObject) => {
+    return objectMap(data, (attr, val, i) => [attr, generateTypedParam(val)]) as StringObject<StringObject>
+}
+
+export const generateExpressionKey = key => `:${key.toLowerCase()}`
+
+export const generateAttributeValues = attrs => Object.fromEntries(Object.entries(attrs).map(([key, value]) => [generateExpressionKey(key), value]))
+
+export const generateConditionExpressionList = attrs => Object.keys(attrs).reduce((result, key) => `${result}, ${key}=${generateExpressionKey(key)}`, '')
