@@ -2,21 +2,6 @@ import { UserService, VocabularyService } from '../services';
 import { STATUS_CODES } from '../constants';
 const { SUCCESS, BAD_REQUEST } = STATUS_CODES;
 
-/*
-export const getWords = async (req, res, next) => {
-    try {
-        const {
-            body: { word }
-        } = req
-
-        const wordId = await VocabularyService.addWord(word);
-
-        res.status(SUCCESS).send(`${word} successfully added.`);
-        next();
-    } catch (error) {
-        next(error, res, next);
-    }
-}*/
 /**
  *
  *
@@ -33,8 +18,7 @@ export const getUserVocabulary = async (req, res, next) => {
         const user = await UserService.getUser(uid);
         const { Words } = user || {};
 
-        const words = Words.map(async (wordId: string) => await VocabularyService.getWord(wordId))
-
+        const words = await Promise.all(Words.map(async (wordId: string) => await VocabularyService.getWord(wordId)));
         res.status(SUCCESS).json({ words });
         next();
     } catch (error) {
@@ -98,9 +82,9 @@ export const addWordToUser = async (req, res, next) => {
         }
 
         const wordId = await VocabularyService.addWord(word);
-        const userFullName = await UserService.addToUserSet(uid, 'Words', wordId);
+        const { FullName } = await UserService.addToUserSet(uid, 'Words', wordId);
 
-        res.status(SUCCESS).json(`${word} successfully added to ${userFullName}.`);
+        res.status(SUCCESS).json(`${word} successfully added to ${FullName}.`);
         next();
     } catch (error) {
         next(error, res, next);

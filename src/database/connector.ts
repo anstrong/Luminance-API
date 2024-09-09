@@ -1,3 +1,4 @@
+import { UUID } from '../interface';
 import { generateAttributeValues, generateConditionExpressionList, generateTypedParam, generateTypedParams, getAWSType, parseResult } from '../utils/AwsUtils';
 import { addToTable, queryTable, updateEntry, scanTable } from './client';
 const { v4: uuidv4 } = require("uuid");
@@ -39,7 +40,7 @@ export const scanBy = async (tableName, key) => {
     return parseResult(results[0]);
 }
 
-export const queryById = async (tableName: string, id: string) => {
+export const queryById = async (tableName: string, id: UUID) => {
     let results: any;
     const values = generateTypedParams({ ":id": id })
     try {
