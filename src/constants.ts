@@ -14,3 +14,5 @@ export const AWSTypeMap = {
     'object': 'M',
     'array': 'L',
 }
+
+export const NO_UID_WHITELIST = ['/ping', '/users/add']
