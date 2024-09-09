@@ -1,9 +1,12 @@
-export type UUID<T> = string;
+export type UUID<T=any> = string;
 export type DocumentIds<T> = UUID<T>[];
 
-export interface User {
-    Id: string
+export interface UserKey {
+    Id: UUID
     FullName: string
+}
+
+export interface User extends UserKey {
     Words: DocumentIds<Word>
     Associations: Associations
 }
