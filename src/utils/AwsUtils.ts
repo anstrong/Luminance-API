@@ -26,6 +26,6 @@ export const generateTypedParams = (data: StringObject) => {
 
 export const generateExpressionKey = key => `:${key.toLowerCase()}`
 
-export const generateAttributeValues = attrs => Object.fromEntries(Object.entries(attrs).map(([key, value]) => [generateExpressionKey(key), value]))
+export const generateAttributeValues = attrs => objectMap(attrs, ([key, value]) => [generateExpressionKey(key), value])
 
 export const generateConditionExpressionList = attrs => Object.keys(attrs).reduce((result, key) => `${result}, ${key}=${generateExpressionKey(key)}`, '')

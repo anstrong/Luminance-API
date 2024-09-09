@@ -2,6 +2,13 @@ import { UserService } from '../services';
 import { STATUS_CODES } from '../constants';
 const { SUCCESS, BAD_REQUEST } = STATUS_CODES;
 
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getUser = async (req, res, next) => {
     try {
         const {
@@ -17,6 +24,13 @@ export const getUser = async (req, res, next) => {
     }
 }
 
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const addUser = async (req, res, next) => {
     try {
         const {

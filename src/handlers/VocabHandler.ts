@@ -17,7 +17,13 @@ export const getWords = async (req, res, next) => {
         next(error, res, next);
     }
 }*/
-
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getUserVocabulary = async (req, res, next) => {
     try {
         const {
@@ -35,6 +41,14 @@ export const getUserVocabulary = async (req, res, next) => {
         next(error, res, next);
     }
 }
+
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const addToVocabulary = async (req, res, next) => {
     try {
         const {
@@ -50,6 +64,13 @@ export const addToVocabulary = async (req, res, next) => {
     }
 }
 
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getUserWordAssociations = async (uid: string, word: string) => {
     const user = await UserService.getUser(uid);
     const { Associations } = user || {};
@@ -57,6 +78,13 @@ export const getUserWordAssociations = async (uid: string, word: string) => {
     return Associations[word] ?? [];
 }
 
+/**
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const addWordToUser = async (req, res, next) => {
     try {
         const {

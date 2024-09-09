@@ -1,7 +1,6 @@
 import { DYNAMO_DB_URL, AWS_REGION } from '../env'
 import { generateTypedParam, generateTypedParams } from '../utils/AwsUtils';
 
-
 const AWS = require("aws-sdk");
 AWS.config.update({ region: AWS_REGION });
 
