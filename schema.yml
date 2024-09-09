@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Luminance API
+  description: API for managing users and vocabulary.
+  version: 1.0.0
+servers:
+  - url: '{{base_url}}'
+    variables:
+      base_url:
+        default: 'http://localhost:3000'
+paths:
+  /users/add:
+    post:
+      summary: Add a new user
+      requestBody:
+        description: User data to be added
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Minerva McGonagall
+      responses:
+        '200':
+          description: User added successfully
+        '400':
+          description: Bad request
+  /users/get:
+    get:
+      summary: Get user details
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: ee722da9-6a17-4d62-9e24-7be9fb6f22a2
+      responses:
+        '200':
+          description: User details retrieved successfully
+        '400':
+          description: Bad request
+  /users/vocabulary/add:
+    post:
+      summary: Add a new vocabulary word
+      requestBody:
+        description: Vocabulary word to be added
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  type: string
+                  example: "exampleWord"
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: some-user
+      responses:
+        '200':
+          description: Vocabulary word added successfully
+        '400':
+          description: Bad request
+  /users/vocabulary/get:
+    get:
+      summary: Get vocabulary words
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: some-user
+        - name: wordId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "exampleWordId"
+      responses:
+        '200':
+          description: Vocabulary words retrieved successfully
+        '400':
+          description: Bad request
+  /ping:
+    get:
+      summary: Ping the server
+      responses:
+        '200':
+          description: Server is alive
+        '500':
+          description: Server error
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+    Vocabulary:
+      type: object
+      properties:
+        word:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "An error occurred"
