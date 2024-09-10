@@ -1,4 +1,5 @@
 import { NO_UID_WHITELIST, STATUS_CODES } from '../constants';
+import { logger } from '../utils/logger';
 const { BAD_REQUEST } = STATUS_CODES;
 
 export const requestHandler = (req, res, next) => {
@@ -8,7 +9,7 @@ export const requestHandler = (req, res, next) => {
             originalUrl: endpoint
         } = req
 
-        console.info(`\nREQUEST: ${JSON.stringify({ ...headers, endpoint })}`)
+        logger.segment('REQUEST', { ...headers, endpoint })
 
 
         if (!(headers.uid || NO_UID_WHITELIST.includes(endpoint))) {

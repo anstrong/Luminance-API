@@ -1,5 +1,6 @@
 import { UUID } from '../interface';
 import { generateAttributeValues, generateConditionExpressionList, generateTypedParam, generateTypedParams, getAWSType, parseResult } from '../utils/AwsUtils';
+import { logger } from '../utils/logger';
 import { addToTable, queryTable, updateEntry, scanTable } from './client';
 const { v4: uuidv4 } = require("uuid");
 /*
@@ -59,7 +60,7 @@ export const queryById = async (tableName: string, id: UUID) => {
 }
 
 export const getIdOrCreate = async (tableName, item) => {
-    console.info(item)
+    logger.debug(item, 'getIdOrCreate')
     try {
         const user = await scanBy(tableName, item)
         if (!user) {
@@ -88,7 +89,6 @@ export const addToEntry = async (tableName, entryKey, attrName, addition, manual
     const params = {
         ExpressionAttributeValues: { ":val": typedParam }
     }
-    console.log(params, generateTypedParam(addition))
     return await updateEntry(tableName, entryKey, updateExpression, params)
 }
 
@@ -99,7 +99,7 @@ export const addToEntryList = async (tableName, entryKey, listName, addition, al
         ExpressionAttributeNames: { '#ls': listName },
         ExpressionAttributeValues: { ":vals": { "L": [generateTypedParam(addition)] }, ":empty": { "L": [] } },
     }
-    console.info(JSON.stringify(params))
+    logger.debug(params, 'addToEntryList')
     try {
         return await updateEntry(tableName, entryKey, updateExpression, params)
     } catch (error) {
@@ -114,7 +114,7 @@ export const addToEntrySet = async (tableName, entryKey, setName, addition, setT
         ExpressionAttributeNames: { '#s': setName },
         ExpressionAttributeValues: { ":vals": { [setType]: [addition] } },
     }
-    console.info(JSON.stringify(params))
+    logger.debug(params, 'addToEntrySet')
     try {
         return await updateEntry(tableName, entryKey, updateExpression, params)
     } catch (error) {

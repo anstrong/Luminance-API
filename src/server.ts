@@ -26,10 +26,10 @@ app.use(ResponseHandler)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
-    console.log(`Starting Express server on http://localhost:${PORT}`)
+    console.log(`Starting Express server on http://localhost:${PORT}\n`)
 })
 
 process.on("SIGINT", async () => {
-    console.log('API stopped');
+    console.log('\nAPI stopped');
     process.exit();
 })

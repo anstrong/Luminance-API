@@ -1,5 +1,7 @@
+import { logger } from "../utils/logger";
+
 export const responseHandler = (req, res, next) => {
-    console.info(`RESPONSE: ${res.statusCode} ${res.statusMessage}`);
+    logger.segment('RESPONSE', `${res.statusCode} ${res.statusMessage}`);
 }
 
 
