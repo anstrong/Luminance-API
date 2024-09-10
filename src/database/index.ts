@@ -1,3 +1,3 @@
-import * as DB from './connector'
+import * as DB from './operations'
 
 export { DB }

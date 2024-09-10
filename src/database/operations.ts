@@ -3,24 +3,6 @@ import { generateAttributeValues, generateConditionExpressionList, generateTyped
 import { logger } from '../utils/logger';
 import { addToTable, queryTable, updateEntry, scanTable } from './client';
 const { v4: uuidv4 } = require("uuid");
-/*
-export const queryByID = async (tableName, id: string) => {
-    let results: any;
-    const values = generateTypedParams({ ":id": id })
-    try {
-        const data = await queryTable(tableName, {
-            ExpressionAttributeValues: values,
-            KeyConditionExpression: "Id = :id",
-        })
-        results = data.Items;
-    } catch (error) {
-        throw new Error(`Unable to retrieve record ${id} from ${tableName}`);
-    }
-    if (!results) {
-        throw new Error(`${id} not found in ${tableName}`);
-    }
-    return parseResult(results[0]);
-}*/
 
 export const scanBy = async (tableName, key) => {
     let results: any;
