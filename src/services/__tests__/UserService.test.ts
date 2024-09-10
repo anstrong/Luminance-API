@@ -4,7 +4,7 @@ import { User } from "../../interface";
 
 const mockDB = jest.mocked(DB);
 
-jest.mock('../../database/connector');
+jest.mock('../../database/operations');
 jest.mock('../../env');
 jest.mock('../../utils/AwsUtils', () => ({
     getAWSType: jest.fn(() => 'some-set-type')
@@ -22,7 +22,7 @@ describe('#getUser', () => {
     });
 
     it('should return the query result', () => {
-        expect(result).toBe('some-user');
+        expect(result).toBe('some-record');
     });
 });
 
@@ -32,6 +32,7 @@ describe('#addUser', () => {
     beforeEach(async () => {
         result = await UserService.addUser('some-name');
     });
+
     it('should call the database', () => {
         expect(mockDB.getIdOrCreate).toHaveBeenCalledWith('some-user-table-name', { FullName: 'some-name' });
     });
@@ -47,15 +48,15 @@ describe('#getUserKey', () => {
 
     beforeEach(async () => {
         mockGetUser.mockResolvedValue({ FullName: 'some-name' } as User)
-        result = await UserService.getUserKey('some-user');
+        result = await UserService.getUserKey('some-record');
     });
 
     it('should get the user name', () => {
-        expect(mockGetUser).toHaveBeenCalledWith('some-user');
+        expect(mockGetUser).toHaveBeenCalledWith('some-record');
     });
 
     it('should return the correct key', () => {
-        expect(result).toStrictEqual({ Id: 'some-user', FullName: 'some-name' });
+        expect(result).toStrictEqual({ Id: 'some-record', FullName: 'some-name' });
     });
 
     describe('when the user record fetch fails', () => {
@@ -64,7 +65,7 @@ describe('#getUserKey', () => {
         })
 
         it('should not intercept the error', () => {
-            expect(async () => await UserService.getUserKey('some-user')).rejects.toThrow('some-error')
+            expect(async () => await UserService.getUserKey('some-record')).rejects.toThrow('some-error')
         })
     })
 });
@@ -76,11 +77,11 @@ describe('#addToUserList', () => {
     beforeEach(async () => {
         // @ts-ignore
         mockGetUserKey.mockResolvedValue('some-user-key');
-        result = await UserService.addToUserList('some-user', 'some-list', 'some-addition');
+        result = await UserService.addToUserList('some-record', 'some-list', 'some-addition');
     });
 
     it('should get the user name', () => {
-        expect(mockGetUserKey).toHaveBeenCalledWith('some-user');
+        expect(mockGetUserKey).toHaveBeenCalledWith('some-record');
     });
 
     it('should call the database with the correct key', () => {
@@ -97,7 +98,7 @@ describe('#addToUserList', () => {
         })
 
         it('should not intercept the error', () => {
-            expect(async () => await UserService.addToUserList('some-user', 'some-list', 'some-addition')).rejects.toThrow('some-error')
+            expect(async () => await UserService.addToUserList('some-record', 'some-list', 'some-addition')).rejects.toThrow('some-error')
         })
     })
 
@@ -105,7 +106,7 @@ describe('#addToUserList', () => {
         beforeEach(async () => {
             (mockDB.addToEntryList).mockRejectedValueOnce(new Error('some-error'));
 
-            result = await UserService.addToUserList('some-user', 'some-list', 'some-addition');
+            result = await UserService.addToUserList('some-record', 'some-list', 'some-addition');
         })
 
         it('should call the database to create the required list', () => {
@@ -123,7 +124,7 @@ describe('#addToUserList', () => {
             })
 
             it('should throw the error', () => {
-                expect(async () => await UserService.addToUserList('some-user', 'some-list', 'some-addition')).rejects.toThrow('some-other-error')
+                expect(async () => await UserService.addToUserList('some-record', 'some-list', 'some-addition')).rejects.toThrow('some-other-error')
             })
         })
     })
@@ -136,11 +137,11 @@ describe('#addToUserSet', () => {
     beforeEach(async () => {
         // @ts-ignore
         mockGetUserKey.mockResolvedValue('some-user-key');
-        result = await UserService.addToUserSet('some-user', 'some-set', 'some-addition');
+        result = await UserService.addToUserSet('some-record', 'some-set', 'some-addition');
     });
 
     it('should get the user name', () => {
-        expect(mockGetUserKey).toHaveBeenCalledWith('some-user');
+        expect(mockGetUserKey).toHaveBeenCalledWith('some-record');
     });
 
     it('should call the database with the correct key', () => {
@@ -157,7 +158,7 @@ describe('#addToUserSet', () => {
         })
 
         it('should not intercept the error', () => {
-            expect(async () => await UserService.addToUserSet('some-user', 'some-set', 'some-addition')).rejects.toThrow('some-error')
+            expect(async () => await UserService.addToUserSet('some-record', 'some-set', 'some-addition')).rejects.toThrow('some-error')
         })
     })
 
@@ -165,7 +166,7 @@ describe('#addToUserSet', () => {
         beforeEach(async () => {
             (mockDB.addToEntrySet).mockRejectedValueOnce(new Error('some-error'));
 
-            result = await UserService.addToUserSet('some-user', 'some-set', 'some-addition');
+            result = await UserService.addToUserSet('some-record', 'some-set', 'some-addition');
         })
 
         it('should call the database to create the required set', () => {
@@ -183,7 +184,7 @@ describe('#addToUserSet', () => {
             })
 
             it('should throw the error', () => {
-                expect(async () => await UserService.addToUserSet('some-user', 'some-set', 'some-addition')).rejects.toThrow('some-other-error')
+                expect(async () => await UserService.addToUserSet('some-record', 'some-set', 'some-addition')).rejects.toThrow('some-other-error')
             })
         })
     })

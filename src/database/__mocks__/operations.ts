@@ -1,4 +1,4 @@
-export const queryById = jest.fn(() => 'some-user')
+export const queryById = jest.fn(() => 'some-record')
 export const getIdOrCreate = jest.fn(() => 'some-id')
 export const addToEntryList = jest.fn((tableName, entryKey, ...rest) => entryKey)
 export const addToEntrySet = jest.fn((tableName, entryKey, ...rest) => entryKey)
